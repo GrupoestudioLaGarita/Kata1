@@ -2,6 +2,9 @@
 package kata1;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -43,15 +46,19 @@ public class Person {
     }
     
     private int getAge(String birthdate){
-        Calendar presentDate = Calendar.getInstance();    
-        String[] dat1 = birthdate.split("/");        
-        int years = presentDate.get(Calendar.YEAR) - Integer.parseInt(dat1[2]);
-        int months = presentDate.get(Calendar.MONTH) - Integer.parseInt(dat1[1]);
+        
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthday = LocalDate.parse(birthdate, fmt);
+        LocalDate presentDate = LocalDate.now();    
+                
+                
+        int years = presentDate.getYear() - birthday.getYear();
+        int months = presentDate.getMonthValue()- birthday.getMonthValue();
         
         if (months < 0){
             years -= 1;
         } else if (months == 0) {
-            int day = presentDate.get(Calendar.DATE) - Integer.parseInt(dat1[0]);
+            int day = presentDate.getDayOfMonth()- birthday.getDayOfMonth();
             if (day > 0){
                 years -= 1;
             }
