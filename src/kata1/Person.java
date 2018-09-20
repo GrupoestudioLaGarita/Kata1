@@ -2,8 +2,7 @@
 package kata1;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Person {
@@ -44,18 +43,15 @@ public class Person {
     }
     
     private int getAge(String birthdate){
-        Date presentDate = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String today = format.format(presentDate);
-        String[] dat1 = birthdate.split("/");
-        String[] dat2 = today.split("/");
-        int years = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
-        int months = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+        Calendar presentDate = Calendar.getInstance();    
+        String[] dat1 = birthdate.split("/");        
+        int years = presentDate.get(Calendar.YEAR) - Integer.parseInt(dat1[2]);
+        int months = presentDate.get(Calendar.MONTH) - Integer.parseInt(dat1[1]);
         
         if (months < 0){
             years -= 1;
         } else if (months == 0) {
-            int day = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+            int day = presentDate.get(Calendar.DATE) - Integer.parseInt(dat1[0]);
             if (day > 0){
                 years -= 1;
             }
